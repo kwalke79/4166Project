@@ -1,0 +1,52 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 16, 2017, 10:00:50 AM
+    Author     : Kassandra Walker & David McAlister
+*/
+
+/* COMPATABILITY CODES */
+article, aside, figure, figcaption, footer, header, nav, section {
+    display:block;
+}
+
+/* BASIC */
+body {
+    background-color: white;
+    font-family: Arial, sans-serif;
+    font-size: 11pt;
+    font-weight: normal;
+}
+
+a:hover { color: red; }
+
+br { clear:both;}
+
+
+/* HEADERS, TABLES */
+h1, h2 { 
+    font-family: Arial, sans-serif;
+    color: teal;
+    margin: .5em;
+}
+
+table, th, td { border: 1px solid black; border-collapse: collapse; padding: .5em; margin: .5em; text-align: left; }
+.align_left { text-align: left; float:left; }
+.align_right {text-align:right; float: right;}
+
+
+/* FORMS */
+label, .labels {
+    float: left;
+    font-weight: bold;
+    margin-bottom: .5em;
+    width: 10em;
+}
+
+textarea, input[type="text"], input[type="email"] {
+    margin: 0 .5em;
+    width: 12em;
+}
