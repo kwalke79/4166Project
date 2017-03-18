@@ -56,6 +56,22 @@ public class MembershipServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String action = request.getParameter("action");
+        String url = "/index.jsp";
+        
+        if (!action.isEmpty() || action != null) {
+            if (action.equals("login")) {
+                // If action is equal to login go to login.jsp
+                url = "/login.jsp";
+            } else if (action.equals("signup")) {
+            // If action is equal to signup go to signup.jsp
+                url = "/signup.jsp";
+            } 
+             getServletContext()
+                .getRequestDispatcher(url)
+                .forward(request, response);
+        }
         processRequest(request, response);
     }
 

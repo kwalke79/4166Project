@@ -13,34 +13,26 @@
         <table>
             <tr><th> Code </th> <th> Description </th> <th> Price </th> 
                 <th></th> <th></th> </tr>
-            <tr> 
+            <!-- The For Each that Loops Through the Products -->
+             <c:forEach>
+             <tr>
                 <td>8601</td>
                 <td>86 (the band) - True Life Songs and Pictures</td> 
                 <td class="align_right">$15.95</td>
-                <td> <a href="#link"> Edit </a> </td> 
-                <td> <a href="confirmDelete.jsp"> Delete </a> </td> 
+                <td> 
+                    <form action="productManagement?action=" method="post">
+                        <input type="hidden" name="ProductID" value=""/>
+                        <input type="submit" value="Edit" />
+                    </form>
+                </td> 
+                <td> 
+                    <form action="productManagement?action=confirmDelete" method="post">
+                        <input type="hidden" name="ProductID" value=""/>
+                        <input type="submit" value="Delete" />
+                    </form>
+                </td> 
             </tr>
-            <tr> 
-                <td>pf01</td>
-                <td>Paddlefoot - The First CD</td> 
-                <td class="align_right">$12.95</td>
-                <td> <a href="#link"> Edit </a> </td> 
-                <td> <a href="confirmDelete.jsp"> Delete </a> </td> 
-            </tr>
-            <tr> 
-                <td>pf02</td>
-                <td>Paddlefoot - The Second CD</td> 
-                <td class="align_right">$14.95</td>
-                <td> <a href="#link"> Edit </a> </td> 
-                <td> <a href="confirmDelete.jsp"> Delete </a> </td> 
-            </tr>
-            <tr>  
-                <td>jr01</td>
-                <td>Joe Rut-Genuine WOod Grained Finish</td> 
-                <td class="align_right">$14.95</td>
-                <td> <a href="#link"> Edit </a> </td> 
-                <td> <a href="confirmDelete.jsp"> Delete </a> </td> 
-            </tr>
+             </c:forEach>
         </table>
         
         <a href="/FinalProject/product.jsp"> <button> Add Product </button> </a>

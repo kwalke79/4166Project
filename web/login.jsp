@@ -14,8 +14,8 @@
             <input type="text" name="userName"/>  <br />
             <label for="password">Password:</label>  
             <input type="password" name="password"/>  <br />
-            <input type="submit" name="submit" value="Login" class="align_right" />  <br />
+            <input type="submit" name="submit" value="Login"/>  <br />
         </form>
-            <a href="signup.jsp">New user? Click here to register"</a>
+            <a href="membership?action=signup">New user? Click here to register"</a>
     </body>
 </html>

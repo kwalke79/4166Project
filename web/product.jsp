@@ -7,10 +7,10 @@
 <%@ include file="header.jsp" %>
     </head>
     <body>
-        <p> User <a href="#logoutLink">Logout</a> </p>
+        <p> User <a href="membership?action=logout">Logout</a> </p>
         
         <h2>Product</h2>
-        <form action="url" method="POST">
+        <form action="productManagement?action=updateProduct" method="POST">
             <label> Code: </label>
             <input type="text" name="code" /> <br />
             <label> Description: </label>
@@ -18,8 +18,7 @@
             <label> Price: </label>
             <input type="text" name="price" /> <br />
             
-            <label> </label>
-            input type="submit" value="Update Products" />
+            <input type="submit" value="Update Products" />
             <input type="button" value="View Products" onclick="location.href='/FinalProject/products.jsp';" />
         </form>
     </body>

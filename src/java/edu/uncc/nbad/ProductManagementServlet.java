@@ -62,22 +62,27 @@ public class ProductManagementServlet extends HttpServlet {
         
         //read action parameter
         String action = request.getParameter("action");
+        String url = "/products.jsp";
         
-        // If action is equal to displayProducts show products.jsp. 
-        // If action is equal to addProduct show product.jsp
-        // If action is equal to displayProduct show product.jsp
-        
-        // If action is equal to deleteProduct show confirmDelete.jsp
-        if (action != null && action.equals("signup")) {
-            //redirect to sign-up.jsp
-            getServletContext().getRequestDispatcher("/sign-up.jsp").forward(request, response);
-        } else if(action!=null && action.equals("profile")) {
-            getServletContext().getRequestDispatcher("/profile.jsp").forward(request, response);
-        } else {
-            try (PrintWriter out = response.getWriter()) {
-                out.println("error! no action ! ");
+        if (action != null) {
+            if (action.equals("displayProducts")) {
+                // If action is equal to displayProducts show products.jsp
+                url = "/products.jsp";
+            } else if (action.equals("addProduct")) {
+            // If action is equal to addProduct show product.jsp
+                url = "/product.jsp";
+            } else if (action.equals("displayProduct")) {
+                // If action is equal to displayProduct show product.jsp
+                url = "/product.jsp";
+            } else if (action.equals("deleteProduct")) {
+                // If action is equal to deleteProduct show confirmDelete.jsp
+                url = "/confirmDelete.jsp";
             }
+             getServletContext()
+                .getRequestDispatcher(url)
+                .forward(request, response);
         }
+       
         
        
         processRequest(request, response);

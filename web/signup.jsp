@@ -9,7 +9,7 @@
     </head>
     <body>
        <h2>Sign-up Form</h2>
-        <form action="membership?action=signup" name="registration" method="post">  
+        <form action="" name="registration" method="post">  
             <label for="firstName">First Name:</label>  
             <input type="text" name="firstName"/>  <br>
             <label for="lastName">Last Name:</label>  
@@ -20,7 +20,7 @@
             <input type="text" name="userName"/>  <br>
             <label for="password">Password:</label>  
             <input type="password" name="password"/>  <br>
-            <input type="submit" name="submit" value="Sign Up" class="align_right" />
+            <input type="submit" name="submit" value="Sign Up" />
         </form>
     </body>
 </html>
