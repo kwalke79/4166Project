@@ -20,7 +20,7 @@
             <input type="text" name="price" value="${product.price}"/> <br />
             
             <input type="hidden" name="update" value="yes"/>
-            <input type="submit" value="Update Product" />
+            <input type="submit" value="Add or Update Product" />
         </form>
             <a href="productManagement?action=displayProducts"> <button class="left"> View All Products </button></a>
     </body>
