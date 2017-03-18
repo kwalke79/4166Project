@@ -10,16 +10,17 @@
         <p> User <a href="membership?action=logout">Logout</a> </p>
         
         <h2>Product</h2>
-        <form action="productManagement?action=updateProduct" method="POST">
+        <form action="productManagement?action=displayProducts" method="POST">
             <label> Code: </label>
-            <input type="text" name="code" /> <br />
+            <input type="text" name="code" value="${product.code}"/> <br />
             <label> Description: </label>
-            <textarea name="description" height="50px;"></textarea> <br />
+            <textarea name="description" height="50px;">${product.description}</textarea> <br />
             <label> Price: </label>
-            <input type="text" name="price" /> <br />
+            <input type="text" name="price" value="${product.price}"/> <br />
             
-            <input type="submit" value="Update Products" />
-            <input type="button" value="View Products" onclick="location.href='/FinalProject/products.jsp';" />
+            <input type="hidden" name="update" value="yes"/>
+            <input type="submit" value="Update Product" />
         </form>
+            <a href="productManagement?action=displayProducts"> <button class="left"> View All Products </button></a>
     </body>
 </html>

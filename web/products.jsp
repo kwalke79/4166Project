@@ -14,20 +14,20 @@
             <tr><th> Code </th> <th> Description </th> <th> Price </th> 
                 <th></th> <th></th> </tr>
             <!-- The For Each that Loops Through the Products -->
-             <c:forEach>
+            <c:forEach var="Product" items="${products}">
              <tr>
-                <td>8601</td>
-                <td>86 (the band) - True Life Songs and Pictures</td> 
-                <td class="align_right">$15.95</td>
+                <td>${Product.code}</td>
+                <td>${Product.description}</td> 
+                <td>$ ${Product.price}</td>
                 <td> 
-                    <form action="productManagement?action=" method="post">
-                        <input type="hidden" name="ProductID" value=""/>
+                    <form action="productManagement?action=displayProduct" method="post">
+                        <input type="hidden" name="productCode" value="<c:out value='${Product.code}'/>"/>
                         <input type="submit" value="Edit" />
                     </form>
                 </td> 
                 <td> 
-                    <form action="productManagement?action=confirmDelete" method="post">
-                        <input type="hidden" name="ProductID" value=""/>
+                    <form action="productManagement?action=deleteProduct" method="post">
+                        <input type="hidden" name="productCode" value="<c:out value='${Product.code}'/>"/>
                         <input type="submit" value="Delete" />
                     </form>
                 </td> 

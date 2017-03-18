@@ -7,6 +7,7 @@ package edu.uncc.nbad;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -62,22 +63,33 @@ public class ProductManagementServlet extends HttpServlet {
         
         //read action parameter
         String action = request.getParameter("action");
-        String url = "/products.jsp";
+        String url;
+        String path = getServletContext().getRealPath("/WEB-INF/products.txt");
         
         if (action != null) {
             if (action.equals("displayProducts")) {
                 // If action is equal to displayProducts show products.jsp
                 url = "/products.jsp";
+                
+                List<Product> products = ProductIO.selectProducts(path);
+                session.setAttribute("products", products);
             } else if (action.equals("addProduct")) {
             // If action is equal to addProduct show product.jsp
                 url = "/product.jsp";
             } else if (action.equals("displayProduct")) {
                 // If action is equal to displayProduct show product.jsp
                 url = "/product.jsp";
+                String productCode = request.getParameter("productCode");
+                Product product = ProductIO.selectProduct(productCode, path);
+                session.setAttribute("product", product);
             } else if (action.equals("deleteProduct")) {
                 // If action is equal to deleteProduct show confirmDelete.jsp
                 url = "/confirmDelete.jsp";
-            }
+                String productCode = request.getParameter("productCode");
+                Product product = ProductIO.selectProduct(productCode, path);
+                session.setAttribute("product", product);
+            } else { url = "/index.jsp"; }
+            
              getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);
@@ -99,7 +111,93 @@ public class ProductManagementServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        HttpSession session = request.getSession();
+        
+        //read action parameter
+        String action = request.getParameter("action");
+        String url = "/products.jsp";
+        String path = getServletContext().getRealPath("/WEB-INF/products.txt");
+        
+        if (action != null) {
+            // DISPLAY PRODUCTS
+            if (action.equals("displayProducts")) {
+                // If action is equal to displayProducts show products.jsp
+                url = "/products.jsp";
+                
+                // if someone is deleteing, then delete and return to the updated page
+                if (request.getParameter("delete") != null) {
+                    if (request.getParameter("delete").equalsIgnoreCase("yes")) {
+                        String productCode = request.getParameter("code");
+                        Product product = ProductIO.selectProduct(productCode, path);
+                        ProductIO.deleteProduct(product, path);
+                    }
+                }
+                
+                
+                // if someone is updating, then delete and return to the updated page
+                if (request.getParameter("update") != null) {
+                    if (request.getParameter("update").equalsIgnoreCase("yes")) {
+                        String productCode = request.getParameter("code");
+                        String productDescription = request.getParameter("description");
+                        Double productPrice = Double.parseDouble(request.getParameter("price"));
+                        if (ProductIO.exists(productCode, path)) {
+                            Product product = ProductIO.selectProduct(productCode, path);
+                            product.setCode(productCode);
+                            product.setDescription(productDescription);
+                            product.setPrice(productPrice);
+                            ProductIO.updateProduct(product, path);
+                        } else {
+                            Product product = new Product();
+                            ProductIO.insertProduct(product, path); product.setCode(productCode);
+                            product.setDescription(productDescription);
+                            product.setPrice(productPrice);
+                        }
+                    }
+                }
+                
+                // get the products
+                List<Product> products = ProductIO.selectProducts(path);
+                session.setAttribute("products", products);
+            } 
+            
+            // ADD PRODUCTS
+            else if (action.equals("addProduct")) {
+            // If action is equal to addProduct show product.jsp
+                url = "/product.jsp";
+                
+                String productCode = request.getParameter("code");
+                String productDescription = request.getParameter("description");
+                String productPrice = request.getParameter("price");
+            } 
+            
+   
+            // DISPLAY PRODUCT
+            else if (action.equals("displayProduct")) {
+                // If action is equal to displayProduct show product.jsp
+                url = "/product.jsp";
+                
+                String productCode = request.getParameter("productCode");
+                Product product = ProductIO.selectProduct(productCode, path);
+                request.setAttribute("product", product);
+            } 
+            
+           
+            // DELETE PRODUCT
+            else if (action.equals("deleteProduct")) {
+                // If action is equal to deleteProduct show confirmDelete.jsp
+                url = "/confirmDelete.jsp";
+                String productCode = request.getParameter("productCode");
+                Product product = ProductIO.selectProduct(productCode, path);
+                request.setAttribute("product", product);
+            } 
+            else { url = "/index.jsp"; }
+            
+             getServletContext()
+                .getRequestDispatcher(url)
+                .forward(request, response);
+        }
+       
     }
 
     /**
