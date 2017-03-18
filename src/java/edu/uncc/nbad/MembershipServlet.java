@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -85,8 +86,42 @@ public class MembershipServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException { 
+        
+        HttpSession session = request.getSession();
+        
+        //read action parameter
+        String action = request.getParameter("action");
+        String url = "/index.jsp";
+        String path = getServletContext().getRealPath("/WEB-INF/users.txt");
+        
+        if (!action.isEmpty() || action != null) {
+            if (action.equals("login-attempt")) {
+                // Validate user
+                String email = request.getParameter("email").trim();
+                if (UserIO.exists(email, path)){  
+                    User user = UserIO.getUser(email, path);
+                    String password = request.getParameter("password").trim();
+                    
+                    if (password.equals(user.getPassword())) {
+                        session.setAttribute("user", user);
+                        url="/products.jsp";
+                    } else {
+                        url="/login.jsp";
+                        request.setAttribute("error", "Wrong password!");
+                    }
+                } else {  
+                    url = "/login.jsp";
+                    request.setAttribute("error", "Username not found!");
+               }
+            } else if (action.equals("signup-attempt")) {
+            // If action is equal to signup go to signup.jsp
+                url = "/signup.jsp";
+            } 
+             getServletContext()
+                .getRequestDispatcher(url)
+                .forward(request, response);
+        }
     }
 
     /**

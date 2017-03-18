@@ -1,8 +1,7 @@
-package murach.data;
+package edu.uncc.nbad;
 
 import java.io.*;
 import java.util.*;
-import murach.business.User;
 
 public class UserIO {
 
@@ -102,4 +101,11 @@ public class UserIO {
         }
         return users;
     }
+    
+    
+    public static boolean exists(String username,String filename) throws IOException {
+        if (getUser(username, filename).getEmail() == username)
+          return true;
+        return false;
+    }    
 }

@@ -9,12 +9,14 @@
     </head>
     <body>
         <h2>Login</h2>
-        <form action="membership?action=login" name="registration" method="post">  
-            <label for="userName">User Name:</label>  
-            <input type="text" name="userName"/>  <br />
+        <c:out value='${error}' />
+        <form action="membership?action=login-attempt" method="post">  
+            <label for="email">Email:</label>  
+            <input type="text" name="email"/>  <br />
             <label for="password">Password:</label>  
             <input type="password" name="password"/>  <br />
-            <input type="submit" name="submit" value="Login"/>  <br />
+            
+            <input type="submit" value="Login"/>  <br />
         </form>
             <a href="membership?action=signup">New user? Click here to register"</a>
     </body>

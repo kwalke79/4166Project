@@ -1,2 +1,2 @@
-Alex|Johnson|a@a.com| 123456789
-Lisa|Johnson|b@b.com| 987654321
+a@a.com|Alex|Johnson|123456789
+b@b.com|Lisa|Johnson|987654321
