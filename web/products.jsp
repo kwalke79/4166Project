@@ -7,7 +7,8 @@
 <%@ include file="header.jsp" %>
     </head>
     <body>
-        <p> User <a href="#logoutLink">Logout</a> </p>
+        <p> Welcome back, <c:out value='${user.firstName}'/>. <br/>
+            <a href="#logoutLink">Logout</a> </p>
         
         <h2>Products</h2>
         <table>

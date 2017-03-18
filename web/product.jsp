@@ -7,7 +7,8 @@
 <%@ include file="header.jsp" %>
     </head>
     <body>
-        <p> User <a href="membership?action=logout">Logout</a> </p>
+        <p> Welcome back, <c:out value='${user.firstName}'/>. <br/>
+            <a href="#logoutLink">Logout</a> </p>
         
         <h2>Product</h2>
         <form action="productManagement?action=displayProducts" method="POST">

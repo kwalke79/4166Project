@@ -1,4 +1,4 @@
-package murach.business;
+package edu.uncc.nbad;
 
 import java.io.Serializable;
 
