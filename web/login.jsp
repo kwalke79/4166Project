@@ -4,8 +4,14 @@
     Author     : Kassandra Walker & David McAlister
 --%>
 
-<%@ include file="header.jsp" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="stylesheet.css" type="text/css" />       
+        <title> Product Management </title>
     </head>
     <body>
         <h2>Login</h2>

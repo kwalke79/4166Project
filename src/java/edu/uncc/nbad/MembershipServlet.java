@@ -57,7 +57,7 @@ public class MembershipServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        HttpSession session = request.getSession();
         String action = request.getParameter("action");
         String url = "/index.jsp";
         
@@ -69,6 +69,12 @@ public class MembershipServlet extends HttpServlet {
             // If action is equal to signup go to signup.jsp
                 url = "/signup.jsp";
             } 
+            else if (action.equals("logout")) {
+                // invalidates the session
+                session.removeAttribute("user");
+                session.invalidate();
+                url = "/membership?action=login";
+            }
              getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);
@@ -105,7 +111,7 @@ public class MembershipServlet extends HttpServlet {
                     
                     if (password.equals(user.getPassword())) {
                         session.setAttribute("user", user);
-                        url="/products.jsp";
+                        url="/productManagement?action=displayProducts";
                     } else {
                         url="/login.jsp";
                         request.setAttribute("error", "Wrong password!");
@@ -116,7 +122,19 @@ public class MembershipServlet extends HttpServlet {
                }
             } else if (action.equals("signup-attempt")) {
             // If action is equal to signup go to signup.jsp
-                url = "/signup.jsp";
+                url = "/login.jsp";
+                
+                String firstName = request.getParameter("firstName");
+                String lastName = request.getParameter("lastName");
+                String email = request.getParameter("email");
+                String password = request.getParameter("password");
+                
+                // IF VALIDATED
+                User u = new User(firstName, lastName, email, password);
+                UserIO.addRecord(u, path);
+                
+                request.setAttribute("error", "Registration Successful");
+                // END IF VALIDATED
             } 
              getServletContext()
                 .getRequestDispatcher(url)

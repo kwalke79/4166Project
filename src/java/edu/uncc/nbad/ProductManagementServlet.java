@@ -145,9 +145,10 @@ public class ProductManagementServlet extends HttpServlet {
                             ProductIO.updateProduct(product, path);
                         } else {
                             Product product = new Product();
-                            ProductIO.insertProduct(product, path); product.setCode(productCode);
+                            product.setCode(productCode);
                             product.setDescription(productDescription);
                             product.setPrice(productPrice);
+                            ProductIO.insertProduct(product, path); product.setCode(productCode);
                         }
                     }
                 }
@@ -155,16 +156,6 @@ public class ProductManagementServlet extends HttpServlet {
                 // get the products
                 List<Product> products = ProductIO.selectProducts(path);
                 session.setAttribute("products", products);
-            } 
-            
-            // ADD PRODUCTS
-            else if (action.equals("addProduct")) {
-            // If action is equal to addProduct show product.jsp
-                url = "/product.jsp";
-                
-                String productCode = request.getParameter("code");
-                String productDescription = request.getParameter("description");
-                String productPrice = request.getParameter("price");
             } 
             
    
