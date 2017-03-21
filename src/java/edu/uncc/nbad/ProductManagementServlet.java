@@ -134,21 +134,28 @@ public class ProductManagementServlet extends HttpServlet {
                 // if someone is updating, then delete and return to the updated page
                 if (request.getParameter("update") != null) {
                     if (request.getParameter("update").equalsIgnoreCase("yes")) {
-                        String productCode = request.getParameter("code");
-                        String productDescription = request.getParameter("description");
-                        Double productPrice = Double.parseDouble(request.getParameter("price"));
-                        if (ProductIO.exists(productCode, path)) {
-                            Product product = ProductIO.selectProduct(productCode, path);
-                            product.setCode(productCode);
-                            product.setDescription(productDescription);
-                            product.setPrice(productPrice);
-                            ProductIO.updateProduct(product, path);
-                        } else {
-                            Product product = new Product();
-                            product.setCode(productCode);
-                            product.setDescription(productDescription);
-                            product.setPrice(productPrice);
-                            ProductIO.insertProduct(product, path); product.setCode(productCode);
+                        try {
+                            String productCode = request.getParameter("code");
+                            String productDescription = request.getParameter("description");
+                            Double productPrice = Double.parseDouble(request.getParameter("price")); 
+
+                            if (ProductIO.exists(productCode, path)) {
+                                Product product = ProductIO.selectProduct(productCode, path);
+                                product.setCode(productCode);
+                                product.setDescription(productDescription);
+                                product.setPrice(productPrice);
+                                ProductIO.updateProduct(product, path);
+                            } else {
+                                Product product = new Product();
+                                product.setCode(productCode);
+                                product.setDescription(productDescription);
+                                product.setPrice(productPrice);
+                                ProductIO.insertProduct(product, path); product.setCode(productCode);
+                            }
+                        } catch (Exception e) {
+                            url = "/productManagement?action=displayProduct";
+                            request.setAttribute("error", "Make sure that you have not left any fields blank and"
+                                    + " filled in the price like: \"15.95\""  + e);
                         }
                     }
                 }

@@ -105,21 +105,27 @@ public class MembershipServlet extends HttpServlet {
             if (action.equals("login-attempt")) {
                 // Validate user
                 String email = request.getParameter("email").trim();
-                if (UserIO.exists(email, path)){  
-                    User user = UserIO.getUser(email, path);
-                    String password = request.getParameter("password").trim();
-                    
-                    if (password.equals(user.getPassword())) {
-                        session.setAttribute("user", user);
-                        url="/productManagement?action=displayProducts";
-                    } else {
-                        url="/login.jsp";
-                        request.setAttribute("error", "Wrong password!");
-                    }
-                } else {  
-                    url = "/login.jsp";
-                    request.setAttribute("error", "Username not found!");
-               }
+                String password = request.getParameter("password").trim();
+                
+                if (email.isEmpty() || email == null || password.isEmpty() || password == null) {
+                    url="/login.jsp";
+                    request.setAttribute("error", "You cannot leave fields blank!");
+                } else {
+                    if (UserIO.exists(email, path)){  
+                        User user = UserIO.getUser(email, path);
+
+                        if (password.equals(user.getPassword())) {
+                            session.setAttribute("user", user);
+                            url="/productManagement?action=displayProducts";
+                        } else {
+                            url="/login.jsp";
+                            request.setAttribute("error", "Wrong password!");
+                        }
+                    } else {  
+                        url = "/login.jsp";
+                        request.setAttribute("error", "Email not found!");
+                   }
+                }
             } else if (action.equals("signup-attempt")) {
             // If action is equal to signup go to signup.jsp
                 url = "/login.jsp";
@@ -143,7 +149,7 @@ public class MembershipServlet extends HttpServlet {
                         request.setAttribute("error", "Registration Successful");
                         // END IF VALIDATED
                     } else if (!email.contains("@")) {
-                        request.setAttribute("error", "Invalid email type.");
+                        request.setAttribute("error", "Invalid email address.");
                     } else if (password.length() <= 8) {
                         request.setAttribute("error", "Password must be more than 8 characters.");
                     }

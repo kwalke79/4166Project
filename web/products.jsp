@@ -8,7 +8,7 @@
     </head>
     <body>
         <p> Welcome back, <c:out value='${user.firstName}'/>. <br/>
-            <a href="#logoutLink">Logout</a> </p>
+            <a href="membership?action=logout">Logout</a> </p>
         
         <h2>Products</h2>
         <table>
