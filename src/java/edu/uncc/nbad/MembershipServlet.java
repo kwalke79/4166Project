@@ -129,12 +129,25 @@ public class MembershipServlet extends HttpServlet {
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
                 
-                // IF VALIDATED
-                User u = new User(firstName, lastName, email, password);
-                UserIO.addRecord(u, path);
-                
-                request.setAttribute("error", "Registration Successful");
-                // END IF VALIDATED
+               // if any input is empty or null, return an error to the registration page
+                if (firstName.trim().isEmpty() || firstName == null || lastName.trim().isEmpty() || lastName == null ||
+                            email.trim().isEmpty() || email == null || password.trim().isEmpty() || password == null) {
+                    request.setAttribute("error", "You cannot leave fields blank!");
+                } else {
+                    if (email.contains("@") && password.length() > 8) {    
+                        // IF VALIDATED
+                        url = "/login.jsp";
+                        User u = new User(firstName, lastName, email, password);
+                        UserIO.addRecord(u, path);
+
+                        request.setAttribute("error", "Registration Successful");
+                        // END IF VALIDATED
+                    } else if (!email.contains("@")) {
+                        request.setAttribute("error", "Invalid email type.");
+                    } else if (password.length() <= 8) {
+                        request.setAttribute("error", "Password must be more than 8 characters.");
+                    }
+                }  
             } 
              getServletContext()
                 .getRequestDispatcher(url)

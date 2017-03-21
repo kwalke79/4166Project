@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <c:if test="${user == null}">
-    <c:redirect url="/membership?action=login" context="2"></c:redirect>
+    <c:redirect url="/login.jsp"></c:redirect>
 </c:if>
 <!DOCTYPE html>
 <html>
