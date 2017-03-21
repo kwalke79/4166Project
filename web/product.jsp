@@ -8,7 +8,10 @@
     </head>
     <body>
         <p> Welcome back, <c:out value='${user.firstName}'/>. <br/>
-            <a href="#logoutLink">Logout</a> </p>
+        <form action="/membership?action=logout" method="get">
+            <input type="hidden" name="userEmail" value="${user.email}"/>
+            <input type="submit" value="logout" />
+        </form> </p>
         
         <h2>Product</h2>
         <form action="productManagement?action=displayProducts" method="POST">
