@@ -8,12 +8,10 @@
     </head>
     <body>
         <p> Welcome back, <c:out value='${user.firstName}'/>. <br/>
-        <form action="/membership?action=logout" method="get">
-            <input type="hidden" name="userEmail" value="${user.email}"/>
-            <input type="submit" value="logout" />
-        </form> </p>
+            <a href="membership?action=logout">Logout</a> </p>
         
         <h2>Product</h2>
+        <c:out value="${error}" />
         <form action="productManagement?action=displayProducts" method="POST">
             <label> Code: </label>
             <input type="text" name="code" value="${product.code}"/> <br />
@@ -25,6 +23,7 @@
             <input type="hidden" name="update" value="yes"/>
             <input type="submit" value="Add or Update Product" />
         </form>
+            <br />
             <a href="productManagement?action=displayProducts"> <button class="left"> View All Products </button></a>
     </body>
 </html>
