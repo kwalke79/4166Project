@@ -73,7 +73,7 @@ public class MembershipServlet extends HttpServlet {
                 // invalidates the session
                 session.removeAttribute("user");
                 session.invalidate();
-                url = "/membership?action=login";
+                url = "/index.jsp";
             }
              getServletContext()
                 .getRequestDispatcher(url)
