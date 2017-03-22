@@ -134,7 +134,7 @@ public class ProductManagementServlet extends HttpServlet {
                 // if someone is updating, then delete and return to the updated page
                 if (request.getParameter("update") != null) {
                     if (request.getParameter("update").equalsIgnoreCase("yes")) {
-                        try {
+                        /*try {*/
                             String productCode = request.getParameter("code");
                             String productDescription = request.getParameter("description");
                             Double productPrice = Double.parseDouble(request.getParameter("price")); 
@@ -152,11 +152,13 @@ public class ProductManagementServlet extends HttpServlet {
                                 product.setPrice(productPrice);
                                 ProductIO.insertProduct(product, path); product.setCode(productCode);
                             }
-                        } catch (Exception e) {
+                        /*} catch (NumberFormatException ex) {
                             url = "/productManagement?action=displayProduct";
                             request.setAttribute("error", "Make sure that you have not left any fields blank and"
-                                    + " filled in the price like: \"15.95\""  + e);
-                        }
+                                    + " filled in the price like: \"15.95\""  + ex);
+                        } catch (Exception ex) {
+                            
+                        }*/
                     }
                 }
                 
