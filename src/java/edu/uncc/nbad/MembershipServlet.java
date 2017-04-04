@@ -73,7 +73,7 @@ public class MembershipServlet extends HttpServlet {
                 // invalidates the session
                 session.removeAttribute("user");
                 session.invalidate();
-                url = "/membership?action=login";
+                url = "/index.jsp";
             }
              getServletContext()
                 .getRequestDispatcher(url)
@@ -128,7 +128,7 @@ public class MembershipServlet extends HttpServlet {
                 }
             } else if (action.equals("signup-attempt")) {
             // If action is equal to signup go to signup.jsp
-                url = "/login.jsp";
+                url = "/register.jsp";
                 
                 String firstName = request.getParameter("firstName");
                 String lastName = request.getParameter("lastName");
