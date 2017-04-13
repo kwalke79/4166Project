@@ -50,7 +50,6 @@ public class ProductTable {
         System.out.println("get list");
         Product product = null;
         
-        
         String qString = "SELECT * FROM products";
         try {
             selectProducts = connection.prepareStatement(qString);
@@ -77,17 +76,23 @@ public class ProductTable {
     public static Product selectProduct(String productCode) {
         System.out.println("get single product");
         Product product = null;
+                
+        String qString = "SELECT * FROM products where code = ?";
         try {
-        connection = DriverManager.getConnection(url, username, password);
-
+            selectProducts = connection.prepareStatement(qString);
+            selectProducts.setString(1, productCode);
+            resultset = selectProducts.executeQuery();
+             
+            product = new Product();
+            return product;
         }
-        catch (SQLException e){
-            for (Throwable t: e)
-                t.printStackTrace();
+        catch(SQLException e){
+            System.out.println(e);
+            return null;
         }
-        return null;
+        
+        
     }
-
     public static boolean exists(String productCode) {
 		throw new NotImplementedException(); // remove this line and implement the logic
     }    
