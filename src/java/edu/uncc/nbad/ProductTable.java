@@ -14,14 +14,12 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 public class ProductTable {
-
-	
     static String url = "jdbc:mysql://localhost:3306/shop";  //I called my db "shop"
     static String username = "project";
     static String password = "1234";
 
     static Connection connection = null;
-    static PreparedStatement selectProducts = null;
+    static PreparedStatement ps = null;
     static ResultSet resultset = null;
     
     static {
@@ -36,25 +34,22 @@ public class ProductTable {
         
         try {
         connection = DriverManager.getConnection(url, username, password);
-
         }
         catch (SQLException e){
+            System.out.println("whatever this does");
             for (Throwable t: e)
                 t.printStackTrace();
         }
-
     }
     
-   
     public static List<Product> selectProducts() {
         System.out.println("get list");
         Product product = null;
-        
-        String qString = "SELECT * FROM products";
+        String qString = "select * FROM products";
         try {
-            selectProducts = connection.prepareStatement(qString);
+            ps = connection.prepareStatement(qString);
             //selectProduct.setInt(1, id);
-            resultset = selectProducts.executeQuery();
+            resultset = ps.executeQuery();
             ArrayList<Product> productList = new ArrayList<>();
             while (resultset.next())
             {
@@ -63,7 +58,6 @@ public class ProductTable {
                 product.setDescription(resultset.getString("description"));
                 product.setPrice(resultset.getDouble("price"));
                 productList.add(product);
-            
             }  
             return productList;
         }
@@ -74,42 +68,82 @@ public class ProductTable {
     }
 
     public static Product selectProduct(String productCode) {
-        System.out.println("get single product");
-        Product product = null;
-                
-        String qString = "SELECT * FROM products where code = ?";
+        Product product = null;             
+        String qString = "select * from products where code = ?";
         try {
-            selectProducts = connection.prepareStatement(qString);
-            selectProducts.setString(1, productCode);
-            resultset = selectProducts.executeQuery();
-             
-            product = new Product();
+            System.out.println("get single productasdf");
+            ps = connection.prepareStatement(qString);
+            ps.setString(1, productCode);
+            resultset = ps.executeQuery();
+            while (resultset.next())
+            {
+                product = new Product();
+                product.setCode(resultset.getString("code"));
+                product.setDescription(resultset.getString("description"));
+                product.setPrice(resultset.getDouble("price"));
+            }
             return product;
         }
         catch(SQLException e){
             System.out.println(e);
             return null;
         }
-        
-        
     }
+    
     public static boolean exists(String productCode) {
-		throw new NotImplementedException(); // remove this line and implement the logic
+        System.out.println("check existence");
+        String qString = "select code from products where code = ?";
+        try {
+            ps = connection.prepareStatement(qString);
+            ps.setString(1, productCode);
+            resultset = ps.executeQuery();
+            String code = resultset.getString(productCode);
+            productCode = code;
+            return true;
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            return false;
+        }        
     }    
     
     private static void saveProducts(List<Product> products) {
-		throw new NotImplementedException(); // remove this line and implement the logic
+		//throw new NotImplementedException(); // remove this line and implement the logic
     }
 
     public static void insertProduct(Product product) {
-		throw new NotImplementedException(); // remove this line and implement the logic
+	System.out.println("product inserted");
+                System.out.println("check existence");
+        String qString = "insert into products (code, description, price) values (?,?,?)";
+        try {
+            ps = connection.prepareStatement(qString);
+            //ps.setRowId(1, )
+            ps.setString(1, product.getCode());
+            ps.setString(2, product.getDescription());
+            ps.setDouble(3, product.getPrice());
+            ps.executeUpdate();
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        } 
+                
     }
 
     public static void updateProduct(Product product) {
+                System.out.println("updating");
 		throw new NotImplementedException(); // remove this line and implement the logic
     }
 
     public static void deleteProduct(Product product) {
-		throw new NotImplementedException(); // remove this line and implement the logic
+        String qString = "delete from products where code = ?";
+        try {
+            System.out.println("delete product");
+            ps = connection.prepareStatement(qString);
+            ps.setString(1, product.getCode());
+            ps.executeUpdate();
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        } 
     }    
 }
