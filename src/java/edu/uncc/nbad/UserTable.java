@@ -95,8 +95,9 @@ public class UserTable {
         
         return users;
     }
-
+/*
     public static HashMap<String, User> getUsersMap() throws IOException {
         throw new NotImplementedException(); // remove this line and implement the logic
     }
+*/
 }

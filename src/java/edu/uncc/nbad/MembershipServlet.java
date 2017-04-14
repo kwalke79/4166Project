@@ -111,8 +111,10 @@ public class MembershipServlet extends HttpServlet {
                     url="/login.jsp";
                     request.setAttribute("error", "You cannot leave fields blank!");
                 } else {
-                    if (UserIO.exists(email, path)){  
-                        User user = UserIO.getUser(email, path);
+                    // check this logic out.. now sure
+                    if (UserTable.getUser(email).getEmail() != null){  
+                        //User user = UserIO.getUser(email, path);
+                        User user = UserTable.getUser(email);
 
                         if (password.equals(user.getPassword())) {
                             session.setAttribute("user", user);
@@ -128,7 +130,7 @@ public class MembershipServlet extends HttpServlet {
                 }
             } else if (action.equals("signup-attempt")) {
             // If action is equal to signup go to signup.jsp
-                url = "/register.jsp";
+                url = "/signup.jsp";
                 
                 String firstName = request.getParameter("firstName");
                 String lastName = request.getParameter("lastName");
@@ -144,7 +146,8 @@ public class MembershipServlet extends HttpServlet {
                         // IF VALIDATED
                         url = "/login.jsp";
                         User u = new User(firstName, lastName, email, password);
-                        UserIO.addRecord(u, path);
+                        // UserIO.addRecord(u, path);
+                        UserTable.addRecord(u);
 
                         request.setAttribute("error", "Registration Successful");
                         // END IF VALIDATED
