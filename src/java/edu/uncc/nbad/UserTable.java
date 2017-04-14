@@ -54,12 +54,46 @@ public class UserTable {
     }
 
     public static User getUser(String emailAddress) throws IOException {
-        throw new NotImplementedException(); // remove this line and implement the logic
-
+       String SQL = "SELECT * FROM `users` WHERE email = ?";
+       User u = new User();
+        try {
+            ps = connection.prepareStatement(SQL);
+            ps.setString(1, emailAddress);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                u.setEmail(emailAddress);
+                u.setFirstName(rs.getString("firstName"));
+                u.setLastName(rs.getString("lastName"));
+                u.setPassword(rs.getString("password"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Exception thrown: " + e);
+        }
+        
+        return u;
     }
 
     public static ArrayList<User> getUsers() throws IOException {
-        throw new NotImplementedException(); // remove this line and implement the logic
+       String SQL = "SELECT * FROM `users`";
+       ArrayList<User> users = new ArrayList<User>();
+        try {
+            ps = connection.prepareStatement(SQL);
+            rs = ps.executeQuery();
+            
+            // get the results and add them to the array list
+            while(rs.next()) {
+                User u = new User();
+                u.setEmail(rs.getString("email"));
+                u.setFirstName(rs.getString("firstName"));
+                u.setLastName(rs.getString("lastName"));
+                u.setPassword(rs.getString("password"));
+                users.add(u);
+            }
+        } catch (SQLException e) {
+            System.out.println("Exception thrown: " + e);
+        }
+        
+        return users;
     }
 
     public static HashMap<String, User> getUsersMap() throws IOException {
