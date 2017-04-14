@@ -71,7 +71,8 @@ public class ProductManagementServlet extends HttpServlet {
                 // If action is equal to displayProducts show products.jsp
                 url = "/products.jsp";
                 
-                List<Product> products = ProductIO.selectProducts(path);
+                //List<Product> products = ProductIO.selectProducts(path);
+                List<Product> products = ProductTable.selectProducts();
                 if(products!= null)
                     session.setAttribute("products", products);
             } else if (action.equals("addProduct")) {
@@ -126,9 +127,10 @@ public class ProductManagementServlet extends HttpServlet {
                 if (request.getParameter("delete") != null) {
                     if (request.getParameter("delete").equalsIgnoreCase("yes")) {
                         String productCode = request.getParameter("code");
-                        Product product = ProductIO.selectProduct(productCode, path);
+                        Product product = ProductTable.selectProduct(productCode);
                         if(product!=null)
-                            ProductIO.deleteProduct(product, path);
+                            ProductTable.deleteProduct(product);
+                            //ProductIO.deleteProduct(product, path);
                     }
                 }
                 
@@ -141,8 +143,9 @@ public class ProductManagementServlet extends HttpServlet {
                             String productDescription = request.getParameter("description");
                             Double productPrice = Double.parseDouble(request.getParameter("price")); 
 
-                            if (ProductIO.exists(productCode, path)) {
-                                Product product = ProductIO.selectProduct(productCode, path);
+                            //if (ProductIO.exists(productCode, path)) {
+                            if(ProductTable.exists(productCode)) {
+                                Product product = ProductTable.selectProduct(productCode);
                                 product.setCode(productCode);
                                 product.setDescription(productDescription);
                                 product.setPrice(productPrice);
@@ -152,7 +155,8 @@ public class ProductManagementServlet extends HttpServlet {
                                 product.setCode(productCode);
                                 product.setDescription(productDescription);
                                 product.setPrice(productPrice);
-                                ProductIO.insertProduct(product, path); product.setCode(productCode);
+                                //ProductIO.insertProduct(product, path); product.setCode(productCode);
+                                ProductTable.insertProduct(product);
                             }
                         } catch (Exception ex) {
                             url = "/productManagement?action=displayProduct";
@@ -163,7 +167,8 @@ public class ProductManagementServlet extends HttpServlet {
                 }
                 
                 // get the products
-                List<Product> products = ProductIO.selectProducts(path);
+                //List<Product> products = ProductIO.selectProducts(path);
+                List<Product> products = ProductTable.selectProducts();
                 session.setAttribute("products", products);
             } 
             
@@ -185,7 +190,8 @@ public class ProductManagementServlet extends HttpServlet {
                 // If action is equal to deleteProduct show confirmDelete.jsp
                 url = "/confirmDelete.jsp";
                 String productCode = request.getParameter("productCode");
-                Product product = ProductIO.selectProduct(productCode, path);
+                //Product product = ProductIO.selectProduct(productCode, path);
+                Product product = ProductTable.selectProduct(productCode);
                 if (product!=null)
                     request.setAttribute("product", product);
             } 
