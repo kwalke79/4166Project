@@ -36,7 +36,6 @@ public class ProductTable {
         connection = DriverManager.getConnection(url, username, password);
         }
         catch (SQLException e){
-            System.out.println("whatever this does");
             for (Throwable t: e)
                 t.printStackTrace();
         }
