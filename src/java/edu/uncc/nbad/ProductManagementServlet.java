@@ -141,7 +141,8 @@ public class ProductManagementServlet extends HttpServlet {
                         try {
                             String productCode = request.getParameter("code");
                             String productDescription = request.getParameter("description");
-                            Double productPrice = Double.parseDouble(request.getParameter("price")); 
+                            //Double productPrice = Double.parseDouble(request.getParameter("price")); 
+                            Double productPrice = Double.valueOf(request.getParameter("price"));
 
                             //if (ProductIO.exists(productCode, path)) {
                             if(ProductTable.exists(productCode)) {
@@ -149,7 +150,8 @@ public class ProductManagementServlet extends HttpServlet {
                                 product.setCode(productCode);
                                 product.setDescription(productDescription);
                                 product.setPrice(productPrice);
-                                ProductIO.updateProduct(product, path);
+                                //ProductIO.updateProduct(product, path);
+                                ProductTable.updateProduct(product);
                             } else {
                                 Product product = new Product();
                                 product.setCode(productCode);
@@ -179,7 +181,8 @@ public class ProductManagementServlet extends HttpServlet {
                 url = "/product.jsp";
                 
                 String productCode = request.getParameter("productCode");
-                Product product = ProductIO.selectProduct(productCode, path);
+                //Product product = ProductIO.selectProduct(productCode, path);\
+                Product product = ProductTable.selectProduct(productCode);
                 if(product!=null)
                     session.setAttribute("product", product);
             } 

@@ -36,7 +36,6 @@ public class ProductTable {
         connection = DriverManager.getConnection(url, username, password);
         }
         catch (SQLException e){
-            System.out.println("whatever this does");
             for (Throwable t: e)
                 t.printStackTrace();
         }
@@ -71,7 +70,7 @@ public class ProductTable {
         Product product = null;             
         String qString = "select * from products where code = ?";
         try {
-            System.out.println("get single productasdf");
+            System.out.println("get single product");
             ps = connection.prepareStatement(qString);
             ps.setString(1, productCode);
             resultset = ps.executeQuery();
@@ -86,25 +85,32 @@ public class ProductTable {
         }
         catch(SQLException e){
             System.out.println(e);
+            System.out.println("select failed");
             return null;
         }
     }
     
     public static boolean exists(String productCode) {
-        System.out.println("check existence");
         String qString = "select code from products where code = ?";
         try {
+            System.out.println("check existence " + productCode);
             ps = connection.prepareStatement(qString);
             ps.setString(1, productCode);
             resultset = ps.executeQuery();
-            String code = resultset.getString(productCode);
-            productCode = code;
-            return true;
+            
+            if(resultset.next()){
+                System.out.println("it exists");
+                return true;
+            } else {
+                System.out.println("does not exist");
+            }
+            
         }
         catch(SQLException e){
             System.out.println(e);
-            return false;
-        }        
+            System.out.println("exists failed");
+        }
+        return false;
     }    
     
     private static void saveProducts(List<Product> products) {
@@ -113,11 +119,9 @@ public class ProductTable {
 
     public static void insertProduct(Product product) {
 	System.out.println("product inserted");
-                System.out.println("check existence");
         String qString = "insert into products (code, description, price) values (?,?,?)";
         try {
             ps = connection.prepareStatement(qString);
-            //ps.setRowId(1, )
             ps.setString(1, product.getCode());
             ps.setString(2, product.getDescription());
             ps.setDouble(3, product.getPrice());
@@ -125,13 +129,26 @@ public class ProductTable {
         }
         catch(SQLException e){
             System.out.println(e);
+            System.out.println("insert failed");
         } 
                 
     }
 
     public static void updateProduct(Product product) {
-                System.out.println("updating");
-		throw new NotImplementedException(); // remove this line and implement the logic
+     String qString = "update products set code=?, description=?, price=? where code=?";
+        try {
+            System.out.println("updating");
+            ps = connection.prepareStatement(qString);
+            ps.setString(1, product.getCode());
+            ps.setString(2, product.getDescription());
+            ps.setDouble(3, product.getPrice());
+            ps.setString(4, product.getCode());
+            ps.executeUpdate();
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            System.out.println("update failed");
+        }
     }
 
     public static void deleteProduct(Product product) {
@@ -144,6 +161,7 @@ public class ProductTable {
         }
         catch(SQLException e){
             System.out.println(e);
+            System.out.println("delete failed");
         } 
     }    
 }
