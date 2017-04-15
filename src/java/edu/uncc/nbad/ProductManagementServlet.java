@@ -204,7 +204,6 @@ public class ProductManagementServlet extends HttpServlet {
                 .getRequestDispatcher(url)
                 .forward(request, response);
         }
-       
     }
 
     /**
