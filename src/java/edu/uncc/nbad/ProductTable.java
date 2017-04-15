@@ -37,7 +37,6 @@ public class ProductTable {
     }
     //Returns a list of all products
     public static List<Product> selectProducts() {
-        System.out.println("get list");
         Product product = null;
         String qString = "select * FROM products";
         try {
@@ -65,7 +64,6 @@ public class ProductTable {
         Product product = null;             
         String qString = "select * from products where code = ?";
         try {
-            System.out.println("get single product");
             ps = connection.prepareStatement(qString);
             ps.setString(1, productCode);
             resultset = ps.executeQuery();
@@ -80,7 +78,6 @@ public class ProductTable {
         }
         catch(SQLException e){
             System.out.println(e);
-            System.out.println("select failed");
             return null;
         }
     }
@@ -88,32 +85,20 @@ public class ProductTable {
     public static boolean exists(String productCode) {
         String qString = "select code from products where code = ?";
         try {
-            System.out.println("check existence " + productCode);
             ps = connection.prepareStatement(qString);
             ps.setString(1, productCode);
             resultset = ps.executeQuery();
             
-            if(resultset.next()){
-                System.out.println("it exists");
+            if(resultset.next())
                 return true;
-            } else {
-                System.out.println("does not exist");
-            }
-            
         }
         catch(SQLException e){
             System.out.println(e);
-            System.out.println("exists failed");
         }
         return false;
     }    
-    
-    private static void saveProducts(List<Product> products) {
-		//throw new NotImplementedException(); // remove this line and implement the logic
-    }
     //adds a new product to the products table
     public static void insertProduct(Product product) {
-	System.out.println("product inserted");
         String qString = "insert into products (code, description, price) values (?,?,?)";
         try {
             ps = connection.prepareStatement(qString);
@@ -124,15 +109,12 @@ public class ProductTable {
         }
         catch(SQLException e){
             System.out.println(e);
-            System.out.println("insert failed");
-        } 
-                
+        }        
     }
     //updates the product with matching product code
     public static void updateProduct(Product product) {
      String qString = "update products set code=?, description=?, price=? where code=?";
         try {
-            System.out.println("updating");
             ps = connection.prepareStatement(qString);
             ps.setString(1, product.getCode());
             ps.setString(2, product.getDescription());
@@ -142,21 +124,23 @@ public class ProductTable {
         }
         catch(SQLException e){
             System.out.println(e);
-            System.out.println("update failed");
         }
     }
     //deletes product form products table
     public static void deleteProduct(Product product) {
         String qString = "delete from products where code = ?";
         try {
-            System.out.println("delete product");
             ps = connection.prepareStatement(qString);
             ps.setString(1, product.getCode());
             ps.executeUpdate();
         }
         catch(SQLException e){
             System.out.println(e);
-            System.out.println("delete failed");
         } 
-    }    
+    }  
+    /*
+    private static void saveProducts(List<Product> products) {
+            //throw new NotImplementedException(); // remove this line and implement the logic
+    }
+    */
 }
