@@ -1,29 +1,24 @@
 package edu.uncc.nbad;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+// implemented by David McAlister
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
-import java.util.StringTokenizer;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
+//import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class ProductTable {
-    static String url = "jdbc:mysql://localhost:3306/shop";  //I called my db "shop"
+    //url to database called 'shop'
+    static String url = "jdbc:mysql://localhost:3306/shop";
     static String username = "project";
     static String password = "1234";
 
     static Connection connection = null;
     static PreparedStatement ps = null;
     static ResultSet resultset = null;
-    
+   
+    //Static initializer, it runs when the class is intialized (it is executed once)
     static {
-        System.out.println("this was called");
+        // connects to the driver
         try {
             Class.forName("com.mysql.jdbc.Driver");
         }
@@ -31,7 +26,7 @@ public class ProductTable {
             System.out.println(e.getMessage());
             System.exit(1);
         }
-        
+        // connects to the database
         try {
         connection = DriverManager.getConnection(url, username, password);
         }
@@ -40,7 +35,7 @@ public class ProductTable {
                 t.printStackTrace();
         }
     }
-    
+    //Returns a list of all products
     public static List<Product> selectProducts() {
         System.out.println("get list");
         Product product = null;
@@ -65,7 +60,7 @@ public class ProductTable {
             return null;
         }
     }
-
+    //returns item with matching product code
     public static Product selectProduct(String productCode) {
         Product product = null;             
         String qString = "select * from products where code = ?";
@@ -89,7 +84,7 @@ public class ProductTable {
             return null;
         }
     }
-    
+    //checks if an item exists
     public static boolean exists(String productCode) {
         String qString = "select code from products where code = ?";
         try {
@@ -116,7 +111,7 @@ public class ProductTable {
     private static void saveProducts(List<Product> products) {
 		//throw new NotImplementedException(); // remove this line and implement the logic
     }
-
+    //adds a new product to the products table
     public static void insertProduct(Product product) {
 	System.out.println("product inserted");
         String qString = "insert into products (code, description, price) values (?,?,?)";
@@ -133,7 +128,7 @@ public class ProductTable {
         } 
                 
     }
-
+    //updates the product with matching product code
     public static void updateProduct(Product product) {
      String qString = "update products set code=?, description=?, price=? where code=?";
         try {
@@ -150,7 +145,7 @@ public class ProductTable {
             System.out.println("update failed");
         }
     }
-
+    //deletes product form products table
     public static void deleteProduct(Product product) {
         String qString = "delete from products where code = ?";
         try {
