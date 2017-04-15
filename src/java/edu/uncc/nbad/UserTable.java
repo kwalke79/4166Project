@@ -1,16 +1,13 @@
 package edu.uncc.nbad;
 // implemented by Kassandra Walker
-
 import java.io.*;
 import java.util.*;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+//import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class UserTable {
-
-    private static String url = "jdbc:mysql://localhost:3306/shop";  //I called my db "shop"
+    //url to database called 'shop'
+    private static String url = "jdbc:mysql://localhost:3306/shop";
     private static String username = "project";
     private static String password = "1234";
 
@@ -37,7 +34,6 @@ public class UserTable {
                 t.printStackTrace();
             }
         }
-
     }
 
     public static void addRecord(User user) throws IOException {
